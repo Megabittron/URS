@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 
 @Component({
-    templateUrl: 'home.component.html'
+    templateUrl: 'admin.component.html'
 })
-export class HomeComponent {
+export class AdminComponent {
     public text: string;
 
     constructor() {
-        this.text = 'Home';
+        this.text = 'Admin';
     }
 }
