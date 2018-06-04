@@ -8,6 +8,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {AdminComponent} from './admin/admin.component';
+import {SubmissionListComponent} from "./submissionList/submissionList.component";
 import {AccountInfoComponent} from './accountInfo/accountInfo.component';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
@@ -25,7 +26,8 @@ import {CustomModule} from './custom.module';
         AppComponent,
         HomeComponent,
         AdminComponent,
-        AccountInfoComponent
+        AccountInfoComponent,
+        SubmissionListComponent
     ],
     providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
