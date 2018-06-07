@@ -8,7 +8,7 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'umm3601.Server'
+mainClassName = 'server.Server'
 
 dependencies {
     compile 'com.sparkjava:spark-core:2.6.0'
