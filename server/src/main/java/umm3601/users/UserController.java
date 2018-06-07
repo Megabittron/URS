@@ -82,6 +82,7 @@ public class UserController {
         }
 
         //FindIterable comes from mongo, Document comes from Gson
+
         FindIterable<Document> matchingUsers = userCollection.find(filterDoc);
 
         return JSON.serialize(matchingUsers);
@@ -100,7 +101,7 @@ public class UserController {
 
         if(JSON.serialize(matchingUsers).equals("[ ]")){
             ObjectId id = new ObjectId();
-
+//////////////////////////////////////////////////////////////// START HERE
             Document newUser = new Document();
             newUser.append("_id", id);
             newUser.append("SubjectID", SubjectID);
