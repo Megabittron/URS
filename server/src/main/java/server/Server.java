@@ -1,11 +1,11 @@
-package umm3601;
+package server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import server.database.user.UserController;
+import server.database.user.UserRequestHandler;
 import spark.Request;
 import spark.Response;
-import umm3601.user.UserController;
-import umm3601.user.UserRequestHandler;
 
 import java.io.IOException;
 

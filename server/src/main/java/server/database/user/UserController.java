@@ -1,4 +1,4 @@
-package umm3601.user;
+package server.database.user;
 
 import com.google.gson.Gson;
 import com.mongodb.*;

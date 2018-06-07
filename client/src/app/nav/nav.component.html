@@ -1,0 +1,16 @@
+<td-layout #layout>
+    <td-navigation-drawer flex sidenavTitle="URS" >
+        <mat-nav-list>
+            <a mat-list-item [routerLink]="['/']" (click)="layout.close()" routerLinkActive="nav-active" [routerLinkActiveOptions]="{exact: true}"><mat-icon>home</mat-icon>Home</a>
+            <a mat-list-item [routerLink]="['/admin']" (click)="layout.close()" routerLinkActive="nav-active"><mat-icon>account_box</mat-icon>Admin</a>
+            <a mat-list-item [routerLink]="['/submissionList']" (click)="layout.close()" routerLinkActive="nav-active"><mat-icon>account_box</mat-icon>Submission List</a>
+            <a mat-list-item [routerLink]="['/accountInfo']" (click)="layout.close()" routerLinkActive="nav-active"><mat-icon>account_box</mat-icon>Account Information</a>
+        </mat-nav-list>
+    </td-navigation-drawer>
+    <td-layout-nav  toolbarTitle="Menu" navigationRoute="/">
+        <button mat-icon-button td-menu-button tdLayoutToggle>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <router-outlet></router-outlet>
+    </td-layout-nav>
+</td-layout>
