@@ -10,9 +10,7 @@ import {Observable} from 'rxjs/Observable';
     providers: [AppService]
 })
 export class AccountInfoComponent {
-    public text: string;
 
     constructor(private router: Router) {
-        this.text = 'Account Info';
     }
 }
