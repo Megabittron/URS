@@ -1,12 +1,15 @@
 import {Component} from '@angular/core';
+import {AppService} from "../app.service";
+import {Router} from "@angular/router";
+import {Observable} from 'rxjs/Observable'
 
 @Component({
-    templateUrl: 'admin.component.html'
+    selector: 'app-admin-component',
+    templateUrl: 'admin.component.html',
+    styleUrls: ['./admin.component.css'],
+    providers: [AppService]
 })
 export class AdminComponent {
-    public text: string;
-
-    constructor() {
-        this.text = 'Admin';
+    constructor(private router: Router) {
     }
 }

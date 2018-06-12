@@ -1,12 +1,16 @@
 import {Component} from '@angular/core';
+import {AppService} from "../app.service";
+import {Router} from "@angular/router";
+import {Observable} from 'rxjs/Observable';
 
 @Component({
-    templateUrl: 'home.component.html'
+    selector: 'app-home-component',
+    templateUrl: 'home.component.html',
+    styleUrls: ['./home.component.css'],
+    providers: [AppService]
 })
 export class HomeComponent {
-    public text: string;
 
-    constructor() {
-        this.text = 'Home';
+    constructor(private router: Router) {
     }
 }

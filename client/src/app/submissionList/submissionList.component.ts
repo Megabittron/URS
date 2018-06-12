@@ -1,12 +1,16 @@
 import {Component} from '@angular/core';
+import {AppService} from "../app.service";
+import {Router} from "@angular/router";
+import {Observable} from 'rxjs/Observable';
 
 @Component({
-    templateUrl: 'submissionList.component.html'
+    selector: 'app-submissionList-component',
+    templateUrl: 'submissionList.component.html',
+    styleUrls: ['./submissionList.component.css'],
+    providers: [AppService]
 })
 export class SubmissionListComponent {
-    public text: string;
 
     constructor() {
-        this.text = 'Submission List';
     }
 }
