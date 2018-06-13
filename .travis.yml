@@ -26,4 +26,4 @@ before_script:
   - npm install -g @angular/cli
   
 notifications:
-    slack: the-dungeon:T6fqLcOAT2GRdoARJIrFGEzh
+    slack: the-dungeon:czvp7ub0zhXPwXhYsrXyNwYG
