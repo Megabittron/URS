@@ -1,4 +1,4 @@
-<td-layout #layout>
+<!--<td-layout #layout>
     <td-navigation-drawer flex sidenavTitle="URS" >
         <mat-nav-list>
             <a mat-list-item [routerLink]="['/']" (click)="layout.close()" routerLinkActive="nav-active" [routerLinkActiveOptions]="{exact: true}"><mat-icon>home</mat-icon>Home</a>
@@ -13,4 +13,12 @@
         </button>
         <router-outlet></router-outlet>
     </td-layout-nav>
-</td-layout>
+</td-layout>-->
+
+<mat-toolbar color="primary" class="navigation">
+    <button mat-button routerLink="/">Undergraduate Research Symposium</button>
+    <span flex=""></span>
+    <button mat-button routerLink="/">Home</button>
+    <button mat-button routerLink="/admin">Admin</button>
+    <button mat-button routerLink="/submissionList">Submission List</button>
+</mat-toolbar>
