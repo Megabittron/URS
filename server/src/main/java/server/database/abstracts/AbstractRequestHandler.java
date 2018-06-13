@@ -1,4 +1,4 @@
-package umm3601.abstracts;
+package server.database.abstracts;
 
 public class AbstractRequestHandler {
 }

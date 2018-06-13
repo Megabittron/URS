@@ -1,4 +1,4 @@
-package umm3601.users;
+package server.database.users;
 
 import com.google.gson.Gson;
 import com.mongodb.MongoException;
