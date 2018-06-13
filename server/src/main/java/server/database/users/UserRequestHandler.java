@@ -1,4 +1,4 @@
-package server.database.user;
+package server.database.users;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.util.JSON;
@@ -6,7 +6,7 @@ import spark.Request;
 import spark.Response;
 
 /**
- * Created by Brian on 11/29/2017.
+ *
  */
 public class UserRequestHandler {
 
@@ -33,7 +33,7 @@ public class UserRequestHandler {
             // https://docs.mongodb.com/manual/reference/method/ObjectId/
             res.status(400);
             res.body("The requested user id " + id + " wasn't a legal Mongo Object ID.\n" +
-                "See 'https://docs.mongodb.com/manual/reference/method/ObjectId/' for more info.");
+                    "See 'https://docs.mongodb.com/manual/reference/method/ObjectId/' for more info.");
             return "";
         }
         if (user != null) {
@@ -61,38 +61,71 @@ public class UserRequestHandler {
     }
 
 
-    /**Method called from Server when the 'api/users/new'endpoint is recieved.
-     * Gets specified user info from request and calls addNewUser helper method
-     * to append that info to a document
-     *
-     * @param req the HTTP request
-     * @param res the HTTP response
-     * @return a boolean as whether the user was added successfully or not
+    /*
+        changes a user's tShirtSize settings
      */
-    public String addNewUser(Request req, Response res)
-    {
-
+    public String editUsertShirtSize(Request req, Response res){
         res.type("application/json");
         Object o = JSON.parse(req.body());
+
         try {
             if(o.getClass().equals(BasicDBObject.class))
             {
                 try {
                     BasicDBObject dbO = (BasicDBObject) o;
 
-                    String name = dbO.getString("name");
-                    //For some reason age is a string right now, caused by angular.
-                    //This is a problem and should not be this way but here ya go
-                    int age = dbO.getInt("age");
-                    String company = dbO.getString("company");
-                    String email = dbO.getString("email");
+                    String userID = dbO.getString("userID");
+                    String tShirtSize = dbO.getString("size");
 
-                    System.err.println("Adding new user [name=" + name + ", age=" + age + " company=" + company + " email=" + email + ']');
-                    return userController.addNewUser(name, age, company, email).toString();
+                    System.out.println("userID: " + userID);
+                    System.out.println("size: " + tShirtSize);
+
+                    return userController.editUsertShirtSize(userID, tShirtSize);
                 }
                 catch(NullPointerException e)
                 {
-                    System.err.println("A value was malformed or omitted, new user request failed.");
+                    return null;
+                }
+
+            }
+            else
+            {
+                System.err.println("Expected BasicDBObject, received " + o.getClass());
+                return null;
+            }
+        }
+        catch(RuntimeException ree)
+        {
+            ree.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    /*
+        changes a user's role settings
+     */
+    public String editUserrole(Request req, Response res){
+        res.type("application/json");
+        Object o = JSON.parse(req.body());
+
+        try {
+            if(o.getClass().equals(BasicDBObject.class))
+            {
+                try {
+                    BasicDBObject dbO = (BasicDBObject) o;
+
+                    String userID = dbO.getString("userID");
+                    String role = dbO.getString("position");
+
+                    System.out.println("userID: " + userID);
+                    System.out.println("position: " + role);
+
+                    return userController.editUserrole(userID, role);
+                }
+                catch(NullPointerException e)
+                {
                     return null;
                 }
 
