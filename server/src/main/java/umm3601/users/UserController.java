@@ -29,8 +29,7 @@ public class UserController {
         this.database = database;
         userCollection = database.getCollection("users");
     }
-    //    /**
-    //
+
     /**  Helper method that gets a single user specified by the `id`
      //     * parameter in the request.
      //     *
@@ -54,8 +53,7 @@ public class UserController {
             return null;
         }
     }
-    //
-//
+
     /** Helper method which iterates through the collection, receiving all
      //     * documents if no query parameter is specified. If the SubjectID query parameter
      //     * is specified, then the collection is filtered so only documents of that
@@ -101,25 +99,25 @@ public class UserController {
 
         if(JSON.serialize(matchingUsers).equals("[ ]")){
             ObjectId id = new ObjectId();
-//////////////////////////////////////////////////////////////// START HERE
+                // by default a user is given the tshirt size medium and the role of a user
             Document newUser = new Document();
             newUser.append("_id", id);
             newUser.append("SubjectID", SubjectID);
             newUser.append("FirstName", FirstName);
             newUser.append("LastName", LastName);
-            newUser.append("StyleSetting", "panda");
-            newUser.append("FontSetting", "arial");
+            newUser.append("tShirtSize", "medium");
+            newUser.append("role", "user");
 
             try {
                 userCollection.insertOne(newUser);
-                System.err.println("Successfully added new user [_id=" + id + ", SubjectID=" + SubjectID + " FirstName=" + FirstName + " LastName=" + LastName + " with Font/Style " + matchingUsers.first().get("FontSetting")+"/"+matchingUsers.first().get("StyleSetting")+ "]");
+                System.err.println("Successfully added new user [_id=" + id + ", SubjectID=" + SubjectID + " FirstName=" + FirstName + " LastName=" + LastName + " with Font/Style " + matchingUsers.first().get("role")+"/"+matchingUsers.first().get("tShirtSize")+ "]");
                 // return JSON.serialize(newUser);
                 Document userInfo = new Document();
                 userInfo.append("_id", matchingUsers.first().get("_id"));
                 userInfo.append("FirstName", matchingUsers.first().get("FirstName"));
                 userInfo.append("LastName", matchingUsers.first().get("LastName"));
-                userInfo.append("StyleSetting", matchingUsers.first().get("StyleSetting"));
-                userInfo.append("FontSetting", matchingUsers.first().get("FontSetting"));
+                userInfo.append("tShirtSize", matchingUsers.first().get("tShirtSize"));
+                userInfo.append("role", matchingUsers.first().get("role"));
 
                 return JSON.serialize(userInfo);
             } catch(MongoException me) {
@@ -132,8 +130,8 @@ public class UserController {
             userInfo.append("_id", matchingUsers.first().get("_id"));
             userInfo.append("FirstName", matchingUsers.first().get("FirstName"));
             userInfo.append("LastName", matchingUsers.first().get("LastName"));
-            userInfo.append("StyleSetting", matchingUsers.first().get("StyleSetting"));
-            userInfo.append("FontSetting", matchingUsers.first().get("FontSetting"));
+            userInfo.append("tShirtSize", matchingUsers.first().get("tShirtSize"));
+            userInfo.append("role", matchingUsers.first().get("role"));
 
             return JSON.serialize(userInfo);
         }
@@ -143,8 +141,8 @@ public class UserController {
 
     }
 
-    //edits user style settings
-    public String editUserStyleSetting(String userID, String setting) {
+    //edits user t-shirt size settings
+    public String editUsertShirtSize(String userID, String setting) {
 
         Document filterDoc = new Document();
         String id;
@@ -155,11 +153,11 @@ public class UserController {
             return JSON.serialize("[ ]");
         }
 
-        Document newStyleSetting = new Document();
-        newStyleSetting.append("StyleSetting", setting);
+        Document newtShirtSize = new Document();
+        newtShirtSize.append("tShirtSize", setting);
 
         Document setQuery = new Document();
-        setQuery.append("$set", newStyleSetting);
+        setQuery.append("$set", newtShirtSize);
 
         //Document searchQuery = new Document().append("_id", new ObjectId(id));
         Document searchQuery = new Document().append("_id", new ObjectId(id));
@@ -172,8 +170,8 @@ public class UserController {
             return null;
         }
     }
-
-    public String editUserFontSetting(String userID, String setting) {
+// changing a user's role setting
+    public String editUserrole(String userID, String setting) {
 
         Document filterDoc = new Document();
         String id;
@@ -184,11 +182,11 @@ public class UserController {
             return JSON.serialize("[ ]");
         }
 
-        Document newFontSetting = new Document();
-        newFontSetting.append("FontSetting", setting);
+        Document newrole = new Document();
+        newrole.append("role", setting);
 
         Document setQuery = new Document();
-        setQuery.append("$set", newFontSetting);
+        setQuery.append("$set", newrole);
 
         //Document searchQuery = new Document().append("_id", new ObjectId(id));
         Document searchQuery = new Document().append("_id", new ObjectId(id));
