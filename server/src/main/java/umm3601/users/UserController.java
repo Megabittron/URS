@@ -142,7 +142,7 @@ public class UserController {
     }
 
     //edits user t-shirt size settings
-    public String editUsertShirtSize(String userID, String setting) {
+    public String editUsertShirtSize(String userID, String size) {
 
         Document filterDoc = new Document();
         String id;
@@ -154,7 +154,7 @@ public class UserController {
         }
 
         Document newtShirtSize = new Document();
-        newtShirtSize.append("tShirtSize", setting);
+        newtShirtSize.append("tShirtSize", size);
 
         Document setQuery = new Document();
         setQuery.append("$set", newtShirtSize);
@@ -164,14 +164,14 @@ public class UserController {
 
         try {
             userCollection.updateOne(searchQuery, setQuery);
-            return JSON.serialize(setting);
+            return JSON.serialize(size);
         } catch(MongoException me) {
             me.printStackTrace();
             return null;
         }
     }
 // changing a user's role setting
-    public String editUserrole(String userID, String setting) {
+    public String editUserrole(String userID, String position) {
 
         Document filterDoc = new Document();
         String id;
@@ -183,7 +183,7 @@ public class UserController {
         }
 
         Document newrole = new Document();
-        newrole.append("role", setting);
+        newrole.append("role", position);
 
         Document setQuery = new Document();
         setQuery.append("$set", newrole);
@@ -194,7 +194,7 @@ public class UserController {
         try {
             userCollection.updateOne(searchQuery, setQuery);
 
-            return JSON.serialize(setting);
+            return JSON.serialize(position);
         } catch(MongoException me) {
             me.printStackTrace();
             return null;
