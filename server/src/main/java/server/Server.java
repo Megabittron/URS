@@ -2,8 +2,8 @@ package server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import server.database.user.UserController;
-import server.database.user.UserRequestHandler;
+import server.database.users.UserRequestHandler;
+import server.database.users.UserController;
 import spark.Request;
 import spark.Response;
 
@@ -61,11 +61,12 @@ public class Server {
         /// User Endpoints ///////////////////////////
         /////////////////////////////////////////////
 
-        //List users, filtered using query parameters
+        //We will be taking this out later for security purposes but for the time being it is serving as the only
+        //api routes
 
         get("api/users", userRequestHandler::getUsers);
         get("api/users/:id", userRequestHandler::getUserJSON);
-        post("api/users/new", userRequestHandler::addNewUser);
+
 
         // An example of throwing an unhandled exception so you can see how the
         // Java Spark debugger displays errors like this.
