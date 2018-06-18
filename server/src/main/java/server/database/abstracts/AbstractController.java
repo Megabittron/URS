@@ -291,6 +291,67 @@ public class AbstractController {
             contentRegQuery.append("$options", "i");
             filterDoc = filterDoc.append("secondPresenterFirstName", contentRegQuery);
         }
+        if (queryParams.containsKey("secondPresenterLastName")) {
+            String targetContent = (queryParams.get("secondPresenterLastName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("secondPresenterLastName", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("secondPresenterEmail")) {
+            String targetContent = (queryParams.get("secondPresenterEmail")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("secondPresenterEmail", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("thirdPresenterFirstName")) {
+            String targetContent = (queryParams.get("thirdPresenterFirstName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("thirdPresenterFirstName", contentRegQuery);
+        }
+        if (queryParams.containsKey("thirdPresenterLastName")) {
+            String targetContent = (queryParams.get("thirdPresenterLastName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("thirdPresenterLastName", contentRegQuery);
+        }
+        if (queryParams.containsKey("thirdPresenterEmail")) {
+            String targetContent = (queryParams.get("thirdPresenterEmail")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("thirdPresenterEmail", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("firstAdviserFirstName")) {
+            String targetContent = (queryParams.get("firstAdviserFirstName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("firstAdviserFirstName", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("firstAdviserLastName")) {
+            String targetContent = (queryParams.get("firstAdviserLastName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("firstAdviserLastName", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("firstAdviserEmail")) {
+            String targetContent = (queryParams.get("firstAdviserEmail")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("firstAdviserEmail", contentRegQuery);
+        }
 
 
 
