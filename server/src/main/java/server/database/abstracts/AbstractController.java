@@ -391,43 +391,54 @@ public class AbstractController {
                                  String firstAdviserFirstName, String firstAdviserLastName, String firstAdviserEmail, String secondAdviserFirstName,
                                  String secondAdviserLastName, String secondAdviserEmail) {
 
-        Document newJournal = new Document();
-        newJournal.append("userID", userID);
-        newJournal.append("title", title);
-        newJournal.append("format", format);
-        newJournal.append("abstracts", abstracts);
-        newJournal.append("presentationType", presentationType);
-        newJournal.append("formatChange", formatChange);
-        newJournal.append("approval", approval);
-        newJournal.append("cc", cc);
-        newJournal.append("rejection", rejection);
-        newJournal.append("group", group);
-        newJournal.append("roomAssignment", roomAssignment);
-        newJournal.append("totalRewriteVotes", totalRewriteVotes);
-        newJournal.append("majorRewriteVotes", majorRewriteVotes);
-        newJournal.append("minorRewriteVotes", minorRewriteVotes);
-        newJournal.append("acceptedVotes", acceptedVotes);
-        newJournal.append("comments", comments);
-        newJournal.append("isPrimarySubmission", isPrimarySubmission);
-        newJournal.append("resubmitFlag", resubmitFlag);
-        newJournal.append("firstPresenterFirstName", firstPresenterFirstName);
-        newJournal.append("firstPresenterLastName", firstPresenterLastName);
-        newJournal.append("firstPresenterEmail", firstPresenterEmail);
-        newJournal.append("secondPresenterFirstName", secondPresenterFirstName);
-        newJournal.append("secondPresenterLastName", secondPresenterLastName);
-        newJournal.append("secondPresenterEmail", secondPresenterEmail);
-        newJournal.append("thirdPresenterFirstName", thirdPresenterFirstName);
-        newJournal.append("thirdPresenterLastName", thirdPresenterLastName);
-        newJournal.append("thirdPresenterEmail", thirdPresenterEmail);
-        newJournal.append("firstAdviserFirstName", firstAdviserFirstName);
-        newJournal.append("firstAdviserLastName", firstAdviserLastName);
-        newJournal.append("firstAdviserEmail", firstAdviserEmail);
-        newJournal.append("secondAdviserFirstName", secondAdviserFirstName);
-        newJournal.append("secondAdviserLastName", secondAdviserLastName);
-        newJournal.append("secondAdviserEmail", secondAdviserEmail);
+        Document newAbstract = new Document();
+        newAbstract.append("userID", userID);
+        newAbstract.append("title", title);
+        newAbstract.append("format", format);
+        newAbstract.append("abstracts", abstracts);
+        newAbstract.append("presentationType", presentationType);
+        newAbstract.append("formatChange", formatChange);
+        newAbstract.append("approval", approval);
+        newAbstract.append("cc", cc);
+        newAbstract.append("rejection", rejection);
+        newAbstract.append("group", group);
+        newAbstract.append("roomAssignment", roomAssignment);
+        newAbstract.append("totalRewriteVotes", totalRewriteVotes);
+        newAbstract.append("majorRewriteVotes", majorRewriteVotes);
+        newAbstract.append("minorRewriteVotes", minorRewriteVotes);
+        newAbstract.append("acceptedVotes", acceptedVotes);
+        newAbstract.append("comments", comments);
+        newAbstract.append("isPrimarySubmission", isPrimarySubmission);
+        newAbstract.append("resubmitFlag", resubmitFlag);
+        newAbstract.append("firstPresenterFirstName", firstPresenterFirstName);
+        newAbstract.append("firstPresenterLastName", firstPresenterLastName);
+        newAbstract.append("firstPresenterEmail", firstPresenterEmail);
+        newAbstract.append("secondPresenterFirstName", secondPresenterFirstName);
+        newAbstract.append("secondPresenterLastName", secondPresenterLastName);
+        newAbstract.append("secondPresenterEmail", secondPresenterEmail);
+        newAbstract.append("thirdPresenterFirstName", thirdPresenterFirstName);
+        newAbstract.append("thirdPresenterLastName", thirdPresenterLastName);
+        newAbstract.append("thirdPresenterEmail", thirdPresenterEmail);
+        newAbstract.append("firstAdviserFirstName", firstAdviserFirstName);
+        newAbstract.append("firstAdviserLastName", firstAdviserLastName);
+        newAbstract.append("firstAdviserEmail", firstAdviserEmail);
+        newAbstract.append("secondAdviserFirstName", secondAdviserFirstName);
+        newAbstract.append("secondAdviserLastName", secondAdviserLastName);
+        newAbstract.append("secondAdviserEmail", secondAdviserEmail);
 
         Date timestamp = new Date();
-        newJournal.append("timestamp", timestamp.toString());
+        newAbstract.append("timestamp", timestamp.toString());
+
+        try {
+            abstractCollection.insertOne(newAbstract);
+            ObjectId id = newAbstract.getObjectId("_id");
+            System.err.println("Successfully added new journal [_id=" + id + ", title=" + title + ", content=" + content + ", date=" + now + ']');
+            return JSON.serialize(id);
+        } catch(MongoException me) {
+            me.printStackTrace();
+            return null;
+        }
+    }
 
 
     }
