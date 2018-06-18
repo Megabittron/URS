@@ -188,6 +188,39 @@ public class AbstractController {
             contentRegQuery.append("$options", "i");
             filterDoc = filterDoc.append("rejection", contentRegQuery);
         }
+        if (queryParams.containsKey("group")) {
+            String targetContent = (queryParams.get("group")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("group", contentRegQuery);
+        }
+        if (queryParams.containsKey("roomAssignment")) {
+            String targetContent = (queryParams.get("roomAssignment")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("roomAssignment", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("totalRewriteVotes")) {
+            String targetContent = (queryParams.get("totalRewriteVotes")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("totalRewriteVotes", contentRegQuery);
+        }
+
+
+        if (queryParams.containsKey("majorRewriteVotes")) {
+            String targetContent = (queryParams.get("majorRewriteVotes")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("majorRewriteVotes", contentRegQuery);
+        }
+
+
 
 
 
