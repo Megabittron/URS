@@ -153,6 +153,46 @@ public class AbstractController {
             contentRegQuery.append("$options", "i");
             filterDoc = filterDoc.append("specialRequirements", contentRegQuery);
         }
+        if (queryParams.containsKey("otherInfo")) {
+            String targetContent = (queryParams.get("otherInfo")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("otherInfo", contentRegQuery);
+        }
+        if (queryParams.containsKey("approval")) {
+            String targetContent = (queryParams.get("approval")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("approval", contentRegQuery);
+        }
+        if (queryParams.containsKey("cc")) {
+            String targetContent = (queryParams.get("cc")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("cc", contentRegQuery);
+        }
+        if (queryParams.containsKey("cc")) {
+            String targetContent = (queryParams.get("cc")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("cc", contentRegQuery);
+        }
+        if (queryParams.containsKey("rejection")) {
+            String targetContent = (queryParams.get("rejection")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("rejection", contentRegQuery);
+        }
+
+
+
+
+
 
 
 
