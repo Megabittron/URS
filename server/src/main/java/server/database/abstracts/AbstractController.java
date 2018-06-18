@@ -211,7 +211,6 @@ public class AbstractController {
             filterDoc = filterDoc.append("totalRewriteVotes", contentRegQuery);
         }
 
-
         if (queryParams.containsKey("majorRewriteVotes")) {
             String targetContent = (queryParams.get("majorRewriteVotes")[0]);
             Document contentRegQuery = new Document();
@@ -219,6 +218,87 @@ public class AbstractController {
             contentRegQuery.append("$options", "i");
             filterDoc = filterDoc.append("majorRewriteVotes", contentRegQuery);
         }
+
+        if (queryParams.containsKey("minorRewriteVotes")) {
+            String targetContent = (queryParams.get("minorRewriteVotes")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("minorRewriteVotes", contentRegQuery);
+        }
+
+
+        if (queryParams.containsKey("acceptedVotes")) {
+            String targetContent = (queryParams.get("acceptedVotes")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("acceptedVotes", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("comments")) {
+            String targetContent = (queryParams.get("comments")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("comments", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("isPrimarySubmission")) {
+            String targetContent = (queryParams.get("isPrimarySubmission")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("isPrimarySubmission", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("resubmitFlag")) {
+            String targetContent = (queryParams.get("resubmitFlag")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("resubmitFlag", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("firstPresenterFirstName")) {
+            String targetContent = (queryParams.get("firstPresenterFirstName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("firstPresenterFirstName", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("firstPresenterLastName")) {
+            String targetContent = (queryParams.get("firstPresenterLastName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("firstPresenterLastName", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("firstPresenterEmail")) {
+            String targetContent = (queryParams.get("firstPresenterEmail")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("firstPresenterEmail", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("secondPresenterFirstName")) {
+            String targetContent = (queryParams.get("secondPresenterFirstName")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("secondPresenterFirstName", contentRegQuery);
+        }
+
+
+
+
+
+
+
+
 
 
 
