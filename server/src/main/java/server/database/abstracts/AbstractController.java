@@ -29,13 +29,15 @@ public class AbstractController {
         abstractCollection = database.getCollection("abstracts");
     }
 
-    /**  Helper method that gets a single abstract specified by the `id` specific user ID
-     //     * parameter in the request.
-     //     *
-     //     * @param id the Mongo ID of the desired Abstract
-     //     * @return the desired Abstract as a JSON object if the user with that ID is found,
-     //     * and `null` if no user with that ID is found
-     //     */
+    /**
+     * Helper method that gets a single abstract specified by the `id` specific user ID
+     * //     * parameter in the request.
+     * //     *
+     * //     * @param id the Mongo ID of the desired Abstract
+     * //     * @return the desired Abstract as a JSON object if the user with that ID is found,
+     * //     * and `null` if no user with that ID is found
+     * //
+     */
 
     public String getAbstract(String id) {
         FindIterable<Document> jsonUsers
@@ -53,14 +55,16 @@ public class AbstractController {
         }
     }
 
-    /** Helper method which iterates through the collection, receiving all
-     //     * documents if no query parameter is specified. If the userID query parameter
-     //     * is specified, then the collection is filtered so only documents of that
-     //     * specified userID are found.
-     //     *
-     //     * @param queryParams
-     //     * @return an array of Abstracts in a JSON formatted string
-     //     */
+    /**
+     * Helper method which iterates through the collection, receiving all
+     * //     * documents if no query parameter is specified. If the userID query parameter
+     * //     * is specified, then the collection is filtered so only documents of that
+     * //     * specified userID are found.
+     * //     *
+     * //     * @param queryParams
+     * //     * @return an array of Abstracts in a JSON formatted string
+     * //
+     */
 
     public String getAbstracts(Map<String, String[]> queryParams) {
 
@@ -82,16 +86,85 @@ public class AbstractController {
             Document contentRegQuery = new Document();
             contentRegQuery.append("$regex", targetContent);
             contentRegQuery.append("$options", "i");
-            filterDoc = filterDoc.append("title", contentRegQuery);        }
+            filterDoc = filterDoc.append("title", contentRegQuery);
+        }
 
-        if (queryParams.containsKey("content")) {
-            String targetContent = (queryParams.get("content")[0]);
+        if (queryParams.containsKey("format")) {
+            String targetContent = (queryParams.get("format")[0]);
             Document contentRegQuery = new Document();
             contentRegQuery.append("$regex", targetContent);
             contentRegQuery.append("$options", "i");
-            filterDoc = filterDoc.append("content", contentRegQuery);
+            filterDoc = filterDoc.append("format", contentRegQuery);
+
+        }
+
+        if (queryParams.containsKey("abstract")) {
+            String targetContent = (queryParams.get("abstract")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("abstract", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("presentationType")) {
+            String targetContent = (queryParams.get("presentationType")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("presentationType", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("formatChange")) {
+            String targetContent = (queryParams.get("formatChange")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("formatChange", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("discipline")) {
+            String targetContent = (queryParams.get("discipline")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("discipline", contentRegQuery);
+        }
+
+
+        if (queryParams.containsKey("featured")) {
+            String targetContent = (queryParams.get("featured")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("featured", contentRegQuery);
+        }
+
+        if (queryParams.containsKey("mediaServicesEquipment")) {
+            String targetContent = (queryParams.get("mediaServicesEquipment")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("mediaServicesEquipment", contentRegQuery);
+        }
+        if (queryParams.containsKey("specialRequirements")) {
+            String targetContent = (queryParams.get("specialRequirements")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("specialRequirements", contentRegQuery);
         }
 
 
 
+
+
+
+
+
+        //FindIterable comes from mongo, Document comes from Gson
+        FindIterable<Document> matchingAbstracts = abstractCollection.find(filterDoc);
+
+        return JSON.serialize(matchingAbstracts);
+
+    }
 }
