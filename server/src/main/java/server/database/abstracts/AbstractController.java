@@ -498,8 +498,8 @@ public class AbstractController {
     /**
      * // Function that edits existing Abstract to the Abstract collection
      * // with specific userID and automated time stamp. Only specific fields would be allowed
-     * // to be editted with your specific userID but for the time being this function allows
-     * // to change all the fields with the default userID
+     * // to be edited with specific userIDs but for the time being this function allows
+     * // the option to edit all the abstracts with the default userID
      */
 
     public String editAbstract(String id,
@@ -612,5 +612,28 @@ public class AbstractController {
         }
 
 
-    }}
+    }
+
+    /**
+     * // Function that deletes existing Abstract from the Abstract collection
+     * // with specific userID and automated time stamp. Only specific fields would be allowed
+     * // to be deleted with specific userID but for the time being this function allows
+     * // to delete with the option of all the available abstracts with the default userID
+     */
+
+    public void deleteAbstract(String id){
+        Document searchQuery = new Document().append("_id", new ObjectId(id));
+        System.out.println("Abstract id: " + id);
+        try {
+            abstractCollection.deleteOne(searchQuery);
+            ObjectId theID = searchQuery.getObjectId("_id");
+            System.out.println("Succesfully deleted abstract with ID: " + theID);
+
+        } catch(MongoException me) {
+            me.printStackTrace();
+            System.out.println("error");
+        }
+    }
+
+}
 
