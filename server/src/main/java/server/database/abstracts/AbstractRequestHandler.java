@@ -67,6 +67,11 @@ public class AbstractRequestHandler {
         return AbstractController.getAbstracts(req.queryMap().toMap());
     }
 
+    /**
+     * Abstracts request handler function to add new abstracts
+     *
+     */
+
     public String addNewAbstract(Request req, Response res)
     {
 
@@ -133,16 +138,17 @@ public class AbstractRequestHandler {
                             + secondAdviserLastName + ", secondAdviserEmail=" + secondAdviserEmail + ']');
 
                     return abstractController.addNewAbstract(userID, title, format, abstracts, presentationType, formatChange
-                    , discipline, featured, mediaServicesEquipment, specialRequirements, otherInfo, approval, cc, rejection
+                    , discipline, featured, mediaServicesEquipment, specialRequirements, otherInfo, approval, cc, rejection,
                     group, roomAssignment, totalRewriteVotes, majorRewriteVotes, minorRewriteVotes, acceptedVotes, comments,
                             isPrimarySubmission, resubmitFlag, firstPresenterFirstName, firstPresenterLastName,
                             firstPresenterEmail, secondPresenterFirstName, secondPresenterLastName, secondPresenterEmail
                     , thirdPresenterFirstName, thirdPresenterLastName, thirdPresenterEmail, firstAdviserFirstName,
-                            firstAdviserLastName, firstAdviserEmail).toString();
+                            firstAdviserLastName, firstAdviserEmail, secondAdviserFirstName, secondAdviserLastName, secondAdviserEmail
+                    ).toString();
                 }
                 catch(NullPointerException e)
                 {
-                    System.err.println("A value was malformed or omitted, new journal request failed.");
+                    System.err.println("A value was malformed or omitted, new abstract request failed.");
                     return null;
                 }
 
@@ -153,10 +159,56 @@ public class AbstractRequestHandler {
                 return null;
             }
         }
-        catch(RuntimeException ree)
-        {
+        catch(RuntimeException ree) {
             ree.printStackTrace();
             return null;
         }
+    }
+
+        /**
+         * Abstracts request handler function to add new abstracts
+         *
+         */
+
+        public String editJournal(Request req, Response res)
+        {
+            System.out.println("Right here");
+            res.type("application/json");
+            Object o = JSON.parse(req.body());
+            try {
+                if(o.getClass().equals(BasicDBObject.class))
+                {
+                    try {
+                        BasicDBObject dbO = (BasicDBObject) o;
+
+                        String id = dbO.getString("_id");
+                        String title = dbO.getString("title");
+                        String content = dbO.getString("content");
+
+
+
+                        System.err.println("Editing journal [ id=" + id + ", title=" + title + ", content=" + content + ']');
+                        return journalController.editJournal(id, title, content).toString();
+                    }
+                    catch(NullPointerException e)
+                    {
+                        System.err.println("A value was malformed or omitted, new journal request failed.");
+                        return null;
+                    }
+
+                }
+                else
+                {
+                    System.err.println("Expected BasicDBObject, received " + o.getClass());
+                    return null;
+                }
+            }
+            catch(RuntimeException ree)
+            {
+                ree.printStackTrace();
+                return null;
+            }
+        }
+
     }
 
