@@ -67,6 +67,58 @@ public class AbstractRequestHandler {
         return AbstractController.getAbstracts(req.queryMap().toMap());
     }
 
+    public String addNewAbstract(Request req, Response res)
+    {
+
+        res.type("application/json");
+        Object o = JSON.parse(req.body());
+        try {
+            if(o.getClass().equals(BasicDBObject.class))
+            {
+                try {
+                    BasicDBObject dbO = (BasicDBObject) o;
+
+                    String userID = dbO.getString("userID");
+                    String id = dbO.getString("id");
+                    String title= dbO.getString("title");
+                    String format= dbO.getString("format");
+                    String abstracts= dbO.getString("abstracts");
+                    String presentationType= dbO.getString("presentationType");
+                    String formatChange= dbO.getString("formatChange");
+                    String discipline= dbO.getString("discipline");
+                    String featured= dbO.getString("featured");
+                    String mediaServicesEquipment= dbO.getString("mediaServicesEquipment");
+                    String specialRequirements= dbO.getString("specialRequirments");
+                    String otherInfo= dbO.getString("otherInfo");
+                    String approval= dbO.getString("approval");
+                    String cc= dbO.getString("cc");
+                    String rejection= dbO.getString("rejection");
+                    String group= dbO.getString("group");
+                    String roomAssignment= dbO.getString("roomAssignment");
+                    String totalRewriteVotes= dbO.getString("totalRewriteVotes");
+                    String majorRewriteVotes= dbO.getString("majorRewriteVotes");
+                    String minorRewriteVotes= dbO.getString("minorRewriteVotes");
+                    String acceptedVotes,
+                    String comments,
+                    String isPrimarySubmission,
+                    String resubmitFlag,
+                    String firstPresenterFirstName,
+                    String firstPresenterLastName,
+                    String firstPresenterEmail,
+                    String secondPresenterFirstName,
+                    String secondPresenterLastName,
+                    String secondPresenterEmail,
+                    String thirdPresenterFirstName,
+                    String thirdPresenterLastName,
+                    String thirdPresenterEmail,
+                    String firstAdviserFirstName,
+                    String firstAdviserLastName,
+                    String firstAdviserEmail,
+                    String secondAdviserFirstName,
+                    String secondAdviserLastName,
+                    String secondAdviserEmail
+
+                    System.err.println("Adding new journal for user " + userID + " [title=" + title + ", content=" + content + ']');
 
 
 }
