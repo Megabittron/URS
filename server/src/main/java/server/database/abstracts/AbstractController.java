@@ -378,6 +378,7 @@ public class AbstractController {
         return JSON.serialize(matchingAbstracts);
 
     }
+
 /**
     // Function that adds new Abstract to the Abstract collection
     // with specific userID and automated time stamp
@@ -494,7 +495,13 @@ public class AbstractController {
         }
     }
 
-    // add editAbstractFunction
+/**
+ // Function that adds new Abstract to the Abstract collection
+ // with specific userID and automated time stamp
+ */
+
+
+
     // add deleteAbstractFunction
 
     }
