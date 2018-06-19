@@ -382,22 +382,59 @@ public class AbstractController {
     // Function that adds new Abstract to the Abstract collection
     // with specific userID and automated time stamp
 */
-    public String addNewAbstract(String userID, String title, String format, String abstracts, String presentationType, Boolean formatChange,
-                                 String discipline, Boolean featured, Boolean mediaServicesEquipment, String SpecialRequirements, String otherInfo,
-                                 Boolean approval, Boolean cc, Boolean rejection, Number group, String roomAssignment, Number totalRewriteVotes, Number majorRewriteVotes,
-                                 Number minorRewriteVotes, Number acceptedVotes, String comments, Boolean isPrimarySubmission, Boolean resubmitFlag, String firstPresenterFirstName,
-                                 String firstPresenterLastName, String firstPresenterEmail, String secondPresenterFirstName, String secondPresenterLastName,
-                                 String secondPresenterEmail, String thirdPresenterFirstName, String thirdPresenterLastName, String thirdPresenterEmail,
-                                 String firstAdviserFirstName, String firstAdviserLastName, String firstAdviserEmail, String secondAdviserFirstName,
-                                 String secondAdviserLastName, String secondAdviserEmail) {
+    public String addNewAbstract(String userID,
+                                 String title,
+                                 String format,
+                                 String abstracts,
+                                 String presentationType,
+                                 Boolean formatChange,
+                                 String discipline,
+                                 Boolean featured,
+                                 Boolean mediaServicesEquipment,
+                                 String specialRequirements,
+                                 String otherInfo,
+                                 Boolean approval,
+                                 Boolean cc,
+                                 Boolean rejection,
+                                 Number group,
+                                 String roomAssignment,
+                                 Number totalRewriteVotes,
+                                 Number majorRewriteVotes,
+                                 Number minorRewriteVotes,
+                                 Number acceptedVotes,
+                                 String comments,
+                                 Boolean isPrimarySubmission,
+                                 Boolean resubmitFlag,
+                                 String firstPresenterFirstName,
+                                 String firstPresenterLastName,
+                                 String firstPresenterEmail,
+                                 String secondPresenterFirstName,
+                                 String secondPresenterLastName,
+                                 String secondPresenterEmail,
+                                 String thirdPresenterFirstName,
+                                 String thirdPresenterLastName,
+                                 String thirdPresenterEmail,
+                                 String firstAdviserFirstName,
+                                 String firstAdviserLastName,
+                                 String firstAdviserEmail,
+                                 String secondAdviserFirstName,
+                                 String secondAdviserLastName,
+                                 String secondAdviserEmail) {
 
         Document newAbstract = new Document();
+
         newAbstract.append("userID", userID);
+
         newAbstract.append("title", title);
         newAbstract.append("format", format);
         newAbstract.append("abstracts", abstracts);
         newAbstract.append("presentationType", presentationType);
         newAbstract.append("formatChange", formatChange);
+        newAbstract.append("discipline", discipline);
+        newAbstract.append("featured", featured);
+        newAbstract.append("mediaServicesEquipment", mediaServicesEquipment);
+        newAbstract.append("specialRequirements", specialRequirements);
+        newAbstract.append("otherInfo", otherInfo);
         newAbstract.append("approval", approval);
         newAbstract.append("cc", cc);
         newAbstract.append("rejection", rejection);
@@ -432,14 +469,25 @@ public class AbstractController {
         try {
             abstractCollection.insertOne(newAbstract);
             ObjectId id = newAbstract.getObjectId("_id");
-            System.err.println("Successfully added new journal [_id=" + id + ", title=" + title + ", content=" + content + ", date=" + now + ']');
+            System.err.println("Successfully added new journal " +
+                    "[_id=" + id + ", title=" + title + ", format=" + format + ", abstracts=" + abstracts + ", " +
+                    "presentationType=" + presentationType + ", formatChange=" + formatChange + ", discipline=" + discipline + ", featured=" + featured + ", " +
+                    "mediaServicesEquipment=" + mediaServicesEquipment + ", specialRequirements=" + specialRequirements + ", otherInfo=" + otherInfo + ", " +
+                    "approval=" + approval + ", cc=" + cc + ", rejection=" + rejection + ", timestamp=" + timestamp + ", group=" + group + ", roomAssignment="
+                    + roomAssignment + ", userID=" + userID + ", totalRewriteVotes=" + totalRewriteVotes + ", majorRewriteVotes=" + majorRewriteVotes + ", " +
+                    "minorRewriteVotes=" + minorRewriteVotes + ", acceptedVotes="  + acceptedVotes + ", comments=" + comments + ", isPrimarySubmission="
+                    + isPrimarySubmission + ", resubmitFlag=" + resubmitFlag + ", firstPresenterFirstName=" + firstPresenterFirstName + ", " +
+                    "firstPresenterLastName=" + firstPresenterLastName + ", firstPresenterEmail=" + firstPresenterEmail=" +     ']');
+
             return JSON.serialize(id);
+
         } catch(MongoException me) {
+
             me.printStackTrace();
+
             return null;
         }
     }
 
 
     }
-}
