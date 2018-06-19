@@ -63,9 +63,9 @@ public class AbstractRequestHandler {
 
     //public String getAbstracts(Request req, Response res)
     //{
-    //  res.type("application/json");
-    //    return AbstractController.getAbstracts(req.queryMap().toMap());
-    // }
+    //res.type("application/json");
+    //   return AbstractController.getAbstracts(req.queryMap().toMap());
+    //}
 
     /**
      * Abstracts request handler function to add new abstracts

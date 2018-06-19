@@ -4,6 +4,8 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import server.database.users.UserRequestHandler;
 import server.database.users.UserController;
+import server.database.abstracts.AbstractController;
+import server.database.abstracts.AbstractRequestHandler;
 import spark.Request;
 import spark.Response;
 
@@ -22,8 +24,15 @@ public class Server {
         MongoClient mongoClient = new MongoClient();
         MongoDatabase userDatabase = mongoClient.getDatabase(userDatabaseName);
 
+        // Did not initialize abstract Database yet so commented out AbstractDatabase function
+
+        // MongoDatabase abstractDatabase = mongoClient.getDatabase(abstractDatabase);
+
         UserController userController = new UserController(userDatabase);
         UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
+
+        //AbstractController abstractController = new AbstractController(abstractDatabase);
+        //AbstractRequestHandler abstractRequestHandler = new AbstractRequestHandler(abstractController);
 
         //Configure Spark
         port(serverPort);
@@ -50,8 +59,7 @@ public class Server {
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
 
-        // Simple example route
-        get("/hello", (req, res) -> "Hello World");
+
 
         // Redirects for the "home" page
         redirect.get("", "/");
@@ -59,13 +67,18 @@ public class Server {
         redirect.get("/", "http://localhost:9000");
 
         /// User Endpoints ///////////////////////////
-        /////////////////////////////////////////////
+
 
         //We will be taking this out later for security purposes but for the time being it is serving as the only
         //api routes
 
         get("api/users", userRequestHandler::getUsers);
         get("api/users/:id", userRequestHandler::getUserJSON);
+
+        // Abstracts Endpoints
+
+        //get("api/abstracts", abstractRequestHandler::getAbstracts);
+        //get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
 
 
         // An example of throwing an unhandled exception so you can see how the
