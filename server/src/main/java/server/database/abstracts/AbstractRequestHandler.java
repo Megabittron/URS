@@ -56,6 +56,16 @@ public class AbstractRequestHandler {
         }
     }
 
+    /**
+     * Abstracts request handler to fetch abstracts in a Json Format
+     *
+     */
+
+    public String getAbstracts(Request req, Response res)
+    {
+        res.type("application/json");
+        return AbstractController.getAbstracts(req.queryMap().toMap());
+    }
 
 
 
