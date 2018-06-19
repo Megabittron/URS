@@ -373,6 +373,7 @@ public class AbstractController {
         }
 
         //FindIterable comes from mongo, Document comes from Gson
+
         FindIterable<Document> matchingAbstracts = abstractCollection.find(filterDoc);
 
         return JSON.serialize(matchingAbstracts);
