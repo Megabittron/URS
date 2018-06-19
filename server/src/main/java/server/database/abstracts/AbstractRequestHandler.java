@@ -58,14 +58,14 @@ public class AbstractRequestHandler {
 
     /**
      * Abstracts request handler to fetch abstracts in a Json Format
-     *
+     * DOES NOT SEEM TO WORK
      */
 
-    public String getAbstracts(Request req, Response res)
-    {
-        res.type("application/json");
-        return AbstractController.getAbstracts(req.queryMap().toMap());
-    }
+    //public String getAbstracts(Request req, Response res)
+    //{
+    //  res.type("application/json");
+    //    return AbstractController.getAbstracts(req.queryMap().toMap());
+    // }
 
     /**
      * Abstracts request handler function to add new abstracts
@@ -266,5 +266,27 @@ public class AbstractRequestHandler {
             }
         }
 
+    /**
+     * Abstracts request handler function to delete abstracts
+     *
+     */
+
+    public String deleteAbstract(Request req, Response res){
+
+        System.out.println("Deleting abstract with ID: " + req.params(":id"));
+
+        res.type("application/json");
+
+        try {
+            String id = req.params(":id");
+            abstractController.deleteAbstract(id);
+            return req.params(":id");
+        }
+        catch(RuntimeException ree)
+        {
+            ree.printStackTrace();
+            return null;
+        }
     }
+}
 
