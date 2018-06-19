@@ -477,7 +477,12 @@ public class AbstractController {
                     + roomAssignment + ", userID=" + userID + ", totalRewriteVotes=" + totalRewriteVotes + ", majorRewriteVotes=" + majorRewriteVotes + ", " +
                     "minorRewriteVotes=" + minorRewriteVotes + ", acceptedVotes="  + acceptedVotes + ", comments=" + comments + ", isPrimarySubmission="
                     + isPrimarySubmission + ", resubmitFlag=" + resubmitFlag + ", firstPresenterFirstName=" + firstPresenterFirstName + ", " +
-                    "firstPresenterLastName=" + firstPresenterLastName + ", firstPresenterEmail=" + firstPresenterEmail=" +     ']');
+                    "firstPresenterLastName=" + firstPresenterLastName + ", firstPresenterEmail=" + firstPresenterEmail + ", secondPresenterFirstName="
+                    + secondPresenterFirstName + ", " + "secondPresenterLastName=" + secondPresenterLastName + ", secondPresenterEmail=" + secondPresenterEmail
+                    + ", thirdPresenterFirstName=" + thirdPresenterFirstName + ", " + "thirdPresenterLastName=" + thirdPresenterLastName + ", " +
+                    "thirdPresenterEmail=" + thirdPresenterEmail + ", firstAdviserFirstName=" + firstAdviserFirstName + ", " + "firstAdviserLastName="
+                    + firstAdviserLastName + ", firstAdviserEmail=" + firstAdviserEmail+ ", secondAdviserFirstName=" + secondAdviserFirstName + ", " + "secondAdviserLastName="
+                    + secondAdviserLastName + ", secondAdviserEmail=" + secondAdviserEmail + ']');
 
             return JSON.serialize(id);
 
@@ -489,5 +494,7 @@ public class AbstractController {
         }
     }
 
+    // add editAbstractFunction
+    // add deleteAbstractFunction
 
     }
