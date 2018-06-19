@@ -378,10 +378,11 @@ public class AbstractController {
         return JSON.serialize(matchingAbstracts);
 
     }
-/**
-    // Function that adds new Abstract to the Abstract collection
-    // with specific userID and automated time stamp
-*/
+
+    /**
+     * // Function that adds new Abstract to the Abstract collection
+     * // with specific userID and automated time stamp
+     */
     public String addNewAbstract(String userID,
                                  String title,
                                  String format,
@@ -474,19 +475,19 @@ public class AbstractController {
                     "presentationType=" + presentationType + ", formatChange=" + formatChange + ", discipline=" + discipline + ", featured=" + featured + ", " +
                     "mediaServicesEquipment=" + mediaServicesEquipment + ", specialRequirements=" + specialRequirements + ", otherInfo=" + otherInfo + ", " +
                     "approval=" + approval + ", cc=" + cc + ", rejection=" + rejection + ", timestamp=" + timestamp + ", group=" + group + ", roomAssignment="
-                    + roomAssignment + ", userID=" + userID + ", totalRewriteVotes=" + totalRewriteVotes + ", majorRewriteVotes=" + majorRewriteVotes + ", " +
-                    "minorRewriteVotes=" + minorRewriteVotes + ", acceptedVotes="  + acceptedVotes + ", comments=" + comments + ", isPrimarySubmission="
+                    + roomAssignment + ", totalRewriteVotes=" + totalRewriteVotes + ", majorRewriteVotes=" + majorRewriteVotes + ", " +
+                    "minorRewriteVotes=" + minorRewriteVotes + ", acceptedVotes=" + acceptedVotes + ", comments=" + comments + ", isPrimarySubmission="
                     + isPrimarySubmission + ", resubmitFlag=" + resubmitFlag + ", firstPresenterFirstName=" + firstPresenterFirstName + ", " +
                     "firstPresenterLastName=" + firstPresenterLastName + ", firstPresenterEmail=" + firstPresenterEmail + ", secondPresenterFirstName="
                     + secondPresenterFirstName + ", " + "secondPresenterLastName=" + secondPresenterLastName + ", secondPresenterEmail=" + secondPresenterEmail
                     + ", thirdPresenterFirstName=" + thirdPresenterFirstName + ", " + "thirdPresenterLastName=" + thirdPresenterLastName + ", " +
                     "thirdPresenterEmail=" + thirdPresenterEmail + ", firstAdviserFirstName=" + firstAdviserFirstName + ", " + "firstAdviserLastName="
-                    + firstAdviserLastName + ", firstAdviserEmail=" + firstAdviserEmail+ ", secondAdviserFirstName=" + secondAdviserFirstName + ", " + "secondAdviserLastName="
+                    + firstAdviserLastName + ", firstAdviserEmail=" + firstAdviserEmail + ", secondAdviserFirstName=" + secondAdviserFirstName + ", " + "secondAdviserLastName="
                     + secondAdviserLastName + ", secondAdviserEmail=" + secondAdviserEmail + ']');
 
             return JSON.serialize(id);
 
-        } catch(MongoException me) {
+        } catch (MongoException me) {
 
             me.printStackTrace();
 
@@ -494,7 +495,145 @@ public class AbstractController {
         }
     }
 
-    // add editAbstractFunction
-    // add deleteAbstractFunction
+    /**
+     * // Function that edits existing Abstract to the Abstract collection
+     * // with specific userID and automated time stamp. Only specific fields would be allowed
+     * // to be edited with specific userIDs but for the time being this function allows
+     * // the option to edit all the abstracts with the default userID
+     */
+
+    public String editAbstract(String id,
+                               String title,
+                               String format,
+                               String abstracts,
+                               String presentationType,
+                               Boolean formatChange,
+                               String discipline,
+                               Boolean featured,
+                               Boolean mediaServicesEquipment,
+                               String specialRequirements,
+                               String otherInfo,
+                               Boolean approval,
+                               Boolean cc,
+                               Boolean rejection,
+                               Number group,
+                               String roomAssignment,
+                               Number totalRewriteVotes,
+                               Number majorRewriteVotes,
+                               Number minorRewriteVotes,
+                               Number acceptedVotes,
+                               String comments,
+                               Boolean isPrimarySubmission,
+                               Boolean resubmitFlag,
+                               String firstPresenterFirstName,
+                               String firstPresenterLastName,
+                               String firstPresenterEmail,
+                               String secondPresenterFirstName,
+                               String secondPresenterLastName,
+                               String secondPresenterEmail,
+                               String thirdPresenterFirstName,
+                               String thirdPresenterLastName,
+                               String thirdPresenterEmail,
+                               String firstAdviserFirstName,
+                               String firstAdviserLastName,
+                               String firstAdviserEmail,
+                               String secondAdviserFirstName,
+                               String secondAdviserLastName,
+                               String secondAdviserEmail) {
+
+        Document newAbstract = new Document();
+
+        newAbstract.append("title", title);
+        newAbstract.append("format", format);
+        newAbstract.append("abstracts", abstracts);
+        newAbstract.append("presentationType", presentationType);
+        newAbstract.append("formatChange", formatChange);
+        newAbstract.append("discipline", discipline);
+        newAbstract.append("featured", featured);
+        newAbstract.append("mediaServicesEquipment", mediaServicesEquipment);
+        newAbstract.append("specialRequirements", specialRequirements);
+        newAbstract.append("otherInfo", otherInfo);
+        newAbstract.append("approval", approval);
+        newAbstract.append("cc", cc);
+        newAbstract.append("rejection", rejection);
+        newAbstract.append("group", group);
+        newAbstract.append("roomAssignment", roomAssignment);
+        newAbstract.append("totalRewriteVotes", totalRewriteVotes);
+        newAbstract.append("majorRewriteVotes", majorRewriteVotes);
+        newAbstract.append("minorRewriteVotes", minorRewriteVotes);
+        newAbstract.append("acceptedVotes", acceptedVotes);
+        newAbstract.append("comments", comments);
+        newAbstract.append("isPrimarySubmission", isPrimarySubmission);
+        newAbstract.append("resubmitFlag", resubmitFlag);
+        newAbstract.append("firstPresenterFirstName", firstPresenterFirstName);
+        newAbstract.append("firstPresenterLastName", firstPresenterLastName);
+        newAbstract.append("firstPresenterEmail", firstPresenterEmail);
+        newAbstract.append("secondPresenterFirstName", secondPresenterFirstName);
+        newAbstract.append("secondPresenterLastName", secondPresenterLastName);
+        newAbstract.append("secondPresenterEmail", secondPresenterEmail);
+        newAbstract.append("thirdPresenterFirstName", thirdPresenterFirstName);
+        newAbstract.append("thirdPresenterLastName", thirdPresenterLastName);
+        newAbstract.append("thirdPresenterEmail", thirdPresenterEmail);
+        newAbstract.append("firstAdviserFirstName", firstAdviserFirstName);
+        newAbstract.append("firstAdviserLastName", firstAdviserLastName);
+        newAbstract.append("firstAdviserEmail", firstAdviserEmail);
+        newAbstract.append("secondAdviserFirstName", secondAdviserFirstName);
+        newAbstract.append("secondAdviserLastName", secondAdviserLastName);
+        newAbstract.append("secondAdviserEmail", secondAdviserEmail);
+
+        Document setQuery = new Document();
+        setQuery.append("$set", newAbstract);
+        Document searchQuery = new Document().append("_id", new ObjectId(id));
+        System.out.println(searchQuery + " the search");
+
+        try {
+            abstractCollection.updateOne(searchQuery, setQuery);
+            System.out.println(abstractCollection.find());
+            ObjectId id1 = searchQuery.getObjectId("_id");
+            System.err.println("Successfully added new journal " +
+                    "[_id=" + id1 + ", title=" + title + ", format=" + format + ", abstracts=" + abstracts + ", " +
+                    "presentationType=" + presentationType + ", formatChange=" + formatChange + ", discipline=" + discipline + ", featured=" + featured + ", " +
+                    "mediaServicesEquipment=" + mediaServicesEquipment + ", specialRequirements=" + specialRequirements + ", otherInfo=" + otherInfo + ", " +
+                    "approval=" + approval + ", cc=" + cc + ", rejection=" + rejection + ", group=" + group + ", roomAssignment="
+                    + roomAssignment + ", totalRewriteVotes=" + totalRewriteVotes + ", majorRewriteVotes=" + majorRewriteVotes + ", " +
+                    "minorRewriteVotes=" + minorRewriteVotes + ", acceptedVotes=" + acceptedVotes + ", comments=" + comments + ", isPrimarySubmission="
+                    + isPrimarySubmission + ", resubmitFlag=" + resubmitFlag + ", firstPresenterFirstName=" + firstPresenterFirstName + ", " +
+                    "firstPresenterLastName=" + firstPresenterLastName + ", firstPresenterEmail=" + firstPresenterEmail + ", secondPresenterFirstName="
+                    + secondPresenterFirstName + ", " + "secondPresenterLastName=" + secondPresenterLastName + ", secondPresenterEmail=" + secondPresenterEmail
+                    + ", thirdPresenterFirstName=" + thirdPresenterFirstName + ", " + "thirdPresenterLastName=" + thirdPresenterLastName + ", " +
+                    "thirdPresenterEmail=" + thirdPresenterEmail + ", firstAdviserFirstName=" + firstAdviserFirstName + ", " + "firstAdviserLastName="
+                    + firstAdviserLastName + ", firstAdviserEmail=" + firstAdviserEmail + ", secondAdviserFirstName=" + secondAdviserFirstName + ", " + "secondAdviserLastName="
+                    + secondAdviserLastName + ", secondAdviserEmail=" + secondAdviserEmail + ']');
+
+            return JSON.serialize(id1);
+        } catch(MongoException me) {
+            me.printStackTrace();
+            return null;
+        }
+
 
     }
+
+    /**
+     * // Function that deletes existing Abstract from the Abstract collection
+     * // with specific userID and automated time stamp. Only specific fields would be allowed
+     * // to be deleted with specific userID but for the time being this function allows
+     * // to delete with the option of all the available abstracts with the default userID
+     */
+
+    public void deleteAbstract(String id){
+        Document searchQuery = new Document().append("_id", new ObjectId(id));
+        System.out.println("Abstract id: " + id);
+        try {
+            abstractCollection.deleteOne(searchQuery);
+            ObjectId theID = searchQuery.getObjectId("_id");
+            System.out.println("Succesfully deleted abstract with ID: " + theID);
+
+        } catch(MongoException me) {
+            me.printStackTrace();
+            System.out.println("error");
+        }
+    }
+
+}
+
