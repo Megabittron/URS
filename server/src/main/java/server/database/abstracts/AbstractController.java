@@ -520,7 +520,7 @@ public class AbstractController {
                                String roomAssignment,
                                Number totalRewriteVotes,
                                Number majorRewriteVotes,
-                               Number minorRewriteVotjournales,
+                               Number minorRewriteVotes,
                                Number acceptedVotes,
                                String comments,
                                Boolean isPrimarySubmission,
