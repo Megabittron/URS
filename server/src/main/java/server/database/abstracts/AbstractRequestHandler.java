@@ -132,7 +132,13 @@ public class AbstractRequestHandler {
                             + firstAdviserLastName + ", firstAdviserEmail=" + firstAdviserEmail + ", secondAdviserFirstName=" + secondAdviserFirstName + ", " + "secondAdviserLastName="
                             + secondAdviserLastName + ", secondAdviserEmail=" + secondAdviserEmail + ']');
 
-                    return journalController.addNewJournal(userID, title, content).toString();
+                    return abstractController.addNewAbstract(userID, title, format, abstracts, presentationType, formatChange
+                    , discipline, featured, mediaServicesEquipment, specialRequirements, otherInfo, approval, cc, rejection
+                    group, roomAssignment, totalRewriteVotes, majorRewriteVotes, minorRewriteVotes, acceptedVotes, comments,
+                            isPrimarySubmission, resubmitFlag, firstPresenterFirstName, firstPresenterLastName,
+                            firstPresenterEmail, secondPresenterFirstName, secondPresenterLastName, secondPresenterEmail
+                    , thirdPresenterFirstName, thirdPresenterLastName, thirdPresenterEmail, firstAdviserFirstName,
+                            firstAdviserLastName, firstAdviserEmail).toString();
                 }
                 catch(NullPointerException e)
                 {
