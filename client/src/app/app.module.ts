@@ -10,6 +10,7 @@ import {HomeComponent} from './home/home.component';
 import {AdminComponent} from './admin/admin.component';
 import {SubmissionListComponent} from "./submissionList/submissionList.component";
 import {AccountInfoComponent} from './accountInfo/accountInfo.component';
+import {NewSubmissionComponent} from './newSubmission/newSubmission.component'
 import {NavComponent} from "./nav/nav.component";
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
@@ -29,6 +30,7 @@ import {CustomModule} from './custom.module';
         AdminComponent,
         AccountInfoComponent,
         SubmissionListComponent,
+        NewSubmissionComponent,
         NavComponent,
     ],
     providers: [
