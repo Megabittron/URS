@@ -13,3 +13,11 @@
 body {
     background-color: #efefef;
 }
+
+.mat-tab-label:hover {
+    background: rgba(255, 204, 51, 0.3);
+}
+
+.mat-tab-label-active {
+    color: #ffcc33 !important;
+}
