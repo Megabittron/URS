@@ -13,4 +13,8 @@ export class HomeComponent {
 
     constructor(private router: Router) {
     }
+
+    newSubmission(): void{
+
+    }
 }
