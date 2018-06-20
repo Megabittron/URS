@@ -8,6 +8,13 @@ import server.database.abstracts.AbstractController;
 import server.database.abstracts.AbstractRequestHandler;
 import spark.Request;
 import spark.Response;
+import spark.Route;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.IOException;
 
@@ -61,6 +68,23 @@ public class Server {
         // Redirects for the "home" page
         redirect.get("", "/");
 
+        Route clientRoute = (req, res) -> {
+            InputStream stream = userController.getClass().getResourceAsStream("/public/index.html");
+            return stream != null ? IOUtils.toString(stream) : "Sorry, we couldn't find that!";
+        };
+
+        Route notFoundRoute = (req, res) -> {
+            res.type("text");
+            res.status(404);
+            return "Sorry, we couldn't find that!";
+        };
+
+        notFound((req, res) -> {
+            res.type("text");
+            res.status(404);
+            return "Sorry, we couldn't find that!";
+        });
+
         /// User Endpoints ///////////////////////////
 
 
@@ -89,12 +113,14 @@ public class Server {
         // before they they're processed by things like `get`.
         after("*", Server::addGzipHeader);
 
+        get("api/*", notFoundRoute);
+
+        get("/*", clientRoute);
+
+
         // Handle "404" file not found requests:
-        notFound((req, res) -> {
-            res.type("text");
-            res.status(404);
-            return "Sorry, we couldn't find that!";
-        });
+        notFound(notFoundRoute);
+
     }
 
     // Enable GZIP for all responses
