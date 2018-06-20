@@ -16,23 +16,20 @@ import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Server {
-    private static final String userDatabaseName = "URS";
+    private static final String databaseName = "dev";
     private static final int serverPort = 4567;
 
     public static void main(String[] args) throws IOException {
 
         MongoClient mongoClient = new MongoClient();
-        MongoDatabase userDatabase = mongoClient.getDatabase(userDatabaseName);
+        MongoDatabase database = mongoClient.getDatabase(databaseName);
 
-        // Did not initialize abstract Database yet so commented out AbstractDatabase function
 
-        // MongoDatabase abstractDatabase = mongoClient.getDatabase(abstractDatabase);
-
-        UserController userController = new UserController(userDatabase);
+        UserController userController = new UserController(database);
         UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
 
-        //AbstractController abstractController = new AbstractController(abstractDatabase);
-        //AbstractRequestHandler abstractRequestHandler = new AbstractRequestHandler(abstractController);
+        AbstractController abstractController = new AbstractController(database);
+        AbstractRequestHandler abstractRequestHandler = new AbstractRequestHandler(abstractController);
 
         //Configure Spark
         port(serverPort);
@@ -64,8 +61,6 @@ public class Server {
         // Redirects for the "home" page
         redirect.get("", "/");
 
-        redirect.get("/", "http://localhost:9000");
-
         /// User Endpoints ///////////////////////////
 
 
@@ -77,8 +72,8 @@ public class Server {
 
         // Abstracts Endpoints
 
-        //get("api/abstracts", abstractRequestHandler::getAbstracts);
-        //get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
+        get("api/abstracts", abstractRequestHandler::getAbstracts);
+        get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
 
 
         // An example of throwing an unhandled exception so you can see how the
