@@ -2,13 +2,21 @@ package server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
-import org.apache.commons.io.IOUtils;
+import server.database.users.UserRequestHandler;
+import server.database.users.UserController;
+import server.database.abstracts.AbstractController;
+import server.database.abstracts.AbstractRequestHandler;
 import spark.Request;
 import spark.Response;
+import spark.Route;
+
+import org.apache.commons.io.IOUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.io.IOException;
 
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -26,9 +34,7 @@ import server.database.abstracts.AbstractRequestHandler;
 
 
 public class Server {
-
     private static final String databaseName = "dev";
-
     private static final int serverPort = 4567;
 
     public static void main(String[] args) throws IOException {
@@ -69,7 +75,26 @@ public class Server {
         // Redirects for the "home" page
         redirect.get("", "/");
 
-        /// User Endpoints //
+        Route clientRoute = (req, res) -> {
+            InputStream stream = userController.getClass().getResourceAsStream("/public/index.html");
+            return stream != null ? IOUtils.toString(stream) : "Sorry, we couldn't find that!";
+        };
+
+        Route notFoundRoute = (req, res) -> {
+            res.type("text");
+            res.status(404);
+            return "Sorry, we couldn't find that!";
+        };
+
+        notFound((req, res) -> {
+            res.type("text");
+            res.status(404);
+            return "Sorry, we couldn't find that!";
+        });
+
+        /// User Endpoints ///////////////////////////
+
+
         //We will be taking this out later for security purposes but for the time being it is serving as the only
         //api routes
 
@@ -144,12 +169,14 @@ public class Server {
         // before they they're processed by things like `get`.
         after("*", Server::addGzipHeader);
 
+        get("api/*", notFoundRoute);
+
+        get("/*", clientRoute);
+
+
         // Handle "404" file not found requests:
-        notFound((req, res) -> {
-            res.type("text");
-            res.status(404);
-            return "Sorry, we couldn't find that!";
-        });
+        notFound(notFoundRoute);
+
     }
 
     // Enable GZIP for all responses
