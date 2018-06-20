@@ -61,11 +61,11 @@ public class AbstractRequestHandler {
      * DOES NOT SEEM TO WORK
      */
 
-    //public String getAbstracts(Request req, Response res)
-    //{
-    //res.type("application/json");
-    //   return AbstractController.getAbstracts(req.queryMap().toMap());
-    //}
+    public String getAbstracts(Request req, Response res)
+    {
+    res.type("application/json");
+       return abstractController.getAbstracts(req.queryMap().toMap());
+    }
 
     /**
      * Abstracts request handler function to add new abstracts
