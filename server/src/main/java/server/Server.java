@@ -86,11 +86,7 @@ public class Server {
             return "Sorry, we couldn't find that!";
         };
 
-        notFound((req, res) -> {
-            res.type("text");
-            res.status(404);
-            return "Sorry, we couldn't find that!";
-        });
+        get("/", clientRoute);
 
         /// User Endpoints ///////////////////////////
 
@@ -101,11 +97,15 @@ public class Server {
         get("api/users", userRequestHandler::getUsers);
         get("api/users/:id", userRequestHandler::getUserJSON);
 
+        // Abstracts Endpoints
+
+        get("api/abstracts", abstractRequestHandler::getAbstracts);
+        get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
+
         post("api/login", (req, res) -> {
 
             JSONObject obj = new JSONObject(req.body());
             String authCode = obj.getString("code");
-
 
             try {
                 // This is where we import the Client Secret File
@@ -153,11 +153,6 @@ public class Server {
             return "";
         });
 
-        // Abstracts Endpoints
-
-        get("api/abstracts", abstractRequestHandler::getAbstracts);
-        get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
-
         get("api/error", (req, res) -> {
             throw new RuntimeException("A demonstration error");
         });
@@ -172,7 +167,6 @@ public class Server {
         get("api/*", notFoundRoute);
 
         get("/*", clientRoute);
-
 
         // Handle "404" file not found requests:
         notFound(notFoundRoute);
