@@ -15,6 +15,7 @@ import {NavComponent} from "./nav/nav.component";
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
 import {CustomModule} from './custom.module';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {CustomModule} from './custom.module';
         SubmissionListComponent,
         NewSubmissionComponent,
         NavComponent,
+        LoginComponent,
     ],
     providers: [
         {provide: APP_BASE_HREF, useValue: '/'},
