@@ -1,5 +1,6 @@
 package server;
 
+import com.google.api.client.json.JsonFactory;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import server.database.users.UserRequestHandler;
@@ -17,8 +18,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.IOException;
+import java.util.Collections;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.*;
+
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
@@ -105,49 +111,32 @@ public class Server {
         post("api/login", (req, res) -> {
 
             JSONObject obj = new JSONObject(req.body());
-            String authCode = obj.getString("code");
+            String idTokenString = obj.getString("idToken");
 
-            try {
-                // This is where we import the Client Secret File
+            String CLIENT_SECRET_FILE = "./src/main/java/server/database/server_files/client_secret.json";
 
-                String CLIENT_SECRET_FILE = "./src/main/java/server/database/server_files/client_secret.json";
+            NetHttpTransport transport = new NetHttpTransport();
+            JsonFactory jsonFactory = new JacksonFactory();
 
-                GoogleClientSecrets clientSecrets =
-                        GoogleClientSecrets.load(
-                                JacksonFactory.getDefaultInstance(), new FileReader(CLIENT_SECRET_FILE));
+            GoogleClientSecrets clientSecrets =
+                    GoogleClientSecrets.load(
+                            JacksonFactory.getDefaultInstance(), new FileReader(CLIENT_SECRET_FILE));
 
-                GoogleTokenResponse tokenResponse =
-                        new GoogleAuthorizationCodeTokenRequest(
-                                new NetHttpTransport(),
-                                JacksonFactory.getDefaultInstance(),
-                                "https://www.googleapis.com/oauth2/v4/token",
-                                clientSecrets.getDetails().getClientId(),
+            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                    .setAudience(Collections.singletonList(clientSecrets.getDetails().getClientId()))
+                    .build();
 
-                                // Replace clientSecret with the localhost one if testing
-                                clientSecrets.getDetails().getClientSecret(),
-                                authCode,
-                                "http://localhost:9000")
 
-                                // Specify the same redirect URI that you use with your web
-                                // app. If you don't have a web version of your app, you can
-                                // specify an empty string.
-                                .execute();
 
-                GoogleIdToken idToken = tokenResponse.parseIdToken();
-                GoogleIdToken.Payload payload = idToken.getPayload();
-                String subjectId = payload.getSubject();  // Use this value as a key to identify a user.
-                String email = payload.getEmail();
-                boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-                String name = (String) payload.get("name");
-                String pictureUrl = (String) payload.get("picture");
-                String locale = (String) payload.get("locale");
-                String familyName = (String) payload.get("family_name");
-                String givenName = (String) payload.get("given_name");
 
-                return userController.addNewUser(subjectId, givenName, familyName);
 
-            } catch (Exception e) {
-                System.out.println(e);
+            GoogleIdToken idToken = verifier.verify(idTokenString);
+
+            if (idToken != null) {
+                Payload payload = idToken.getPayload();
+
+                System.out.println(payload.getSubject());
+
             }
 
             return "";
