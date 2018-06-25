@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta name="google-signin-client_id" content="450453277496-7vivahunsdfj4rvqv4q1pb6e6bqlk4v3.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="450453277496-7vivahunsdfj4rvqv4q1pb6e6bqlk4v3.apps.googleusercontent.com">
 
     <meta charset="utf-8">
     <!-- Instruct Internet Explorer to use its latest rendering engine -->
@@ -18,9 +18,14 @@
 </head>
 <body>
 <script>
+
     function onSignIn(googleUser) {
+
+        var googleAuth = gapi.auth2.getAuthInstance();
+
+
         var idToken = '{"idToken":' + googleUser.getAuthResponse().id_token + '}';
-        // var profile = googleUser.getBasicProfile();
+        var profile = googleUser.getBasicProfile();
 
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:4567/api/login", true);
@@ -30,7 +35,12 @@
 
         function processRequest() {
             if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                if (xhr.responseText == "null") {
 
+                    console.log('Signing ' + profile.getName() + ' out!');
+                    googleAuth.disconnect();
+                }
 
             }
         }
