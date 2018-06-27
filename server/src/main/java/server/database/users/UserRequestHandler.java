@@ -23,7 +23,7 @@ public class UserRequestHandler {
      */
     public String getUserJSON(Request req, Response res){
         res.type("application/json");
-        String id = req.params("id");
+        String id = req.params("_id");
         String user;
         try {
             user = userController.getUser(id);

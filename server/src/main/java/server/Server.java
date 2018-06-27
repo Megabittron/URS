@@ -82,14 +82,14 @@ public class Server {
         //api routes
 
         get("api/users", userRequestHandler::getUsers);
-        get("api/users/:id", userRequestHandler::getUserJSON);
+        get("api/user/:_id", userRequestHandler::getUserJSON);
 
         // Abstracts Endpoints
 
         get("api/abstracts", abstractRequestHandler::getAbstracts);
         get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
 
-        post("api/login", loginRequestHandler::loginUser);
+        get("api/login/:token", loginRequestHandler::loginUser);
 
 
         get("api/error", (req, res) -> {
