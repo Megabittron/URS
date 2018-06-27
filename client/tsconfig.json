@@ -13,7 +13,8 @@
         ],
         "types": [
             "gapi",
-            "gapi.auth2"
+            "gapi.auth2",
+            "jasmine"
         ],
         "lib": [
             "es2017",
