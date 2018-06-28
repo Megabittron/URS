@@ -1,5 +1,6 @@
-<body>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
-<button mat-raised-button (click)="checkUserDetails()">Check Name</button>
-<button mat-raised-button (click)="signOut()">Sign Out</button>
-</body>
+<button *ngIf="isLoggedIn" (click)="signOut()">Sign Out</button>
+<h2> Signed in as {{user.FirstName}} {{user.LastName}} </h2>
+
+<button id="inv" (click)="checkUserDetails()">check stats</button>
+<div id="my-signin2"></div>
+

@@ -46,6 +46,22 @@ public class UserController {
         return JSON.serialize(user);
     }
 
+    /**  Helper method that gets a single user specified by the `id`
+     //     * parameter in the request.
+     //     *
+     //     * @param id the Mongo ID of the desired user
+     //     * @return the desired user as a JSON object if the user with that ID is found,
+     //     * and `null` if no user with that ID is found
+     //     */
+    public String getUserBySub(String subjectID) {
+        Document filterDoc = new Document();
+        filterDoc.append("SubjectID", subjectID);
+
+        FindIterable<Document> user = userCollection.find(filterDoc);
+
+        return JSON.serialize(user);
+    }
+
     /** Helper method which iterates through the collection, receiving all
      //     * documents if no query parameter is specified. If the SubjectID query parameter
      //     * is specified, then the collection is filtered so only documents of that
@@ -78,60 +94,28 @@ public class UserController {
         return JSON.serialize(matchingUsers);
     }
 
-    public String addNewUser(String SubjectID, String FirstName, String LastName) {
+    public String addNewUser(String subjectID, String firstName, String lastName) {
 
-        Document filterDoc = new Document();
 
-        Document contentRegQuery = new Document();
-        contentRegQuery.append("$regex", SubjectID);
-        contentRegQuery.append("$options", "i");
-        filterDoc = filterDoc.append("SubjectID", contentRegQuery);
-
-        FindIterable<Document> matchingUsers = userCollection.find(filterDoc);
-
-        if(JSON.serialize(matchingUsers).equals("[ ]")){
-            ObjectId id = new ObjectId();
-                // by default a user is given the tshirt size medium and the role of a user
+                // by default a user is given an empty tshirt size and the role of a user
             Document newUser = new Document();
-            newUser.append("_id", id);
-            newUser.append("SubjectID", SubjectID);
-            newUser.append("FirstName", FirstName);
-            newUser.append("LastName", LastName);
-            newUser.append("tShirtSize", "medium");
-            newUser.append("role", "user");
+            newUser.append("SubjectID", subjectID);
+            newUser.append("FirstName", firstName);
+            newUser.append("LastName", lastName);
+            newUser.append("ShirtSize", "");
+            newUser.append("Role", "user");
 
             try {
                 userCollection.insertOne(newUser);
-                System.err.println("Successfully added new user [_id=" + id + ", SubjectID=" + SubjectID + " FirstName=" + FirstName + " LastName=" + LastName + " with Font/Style " + matchingUsers.first().get("role")+"/"+matchingUsers.first().get("tShirtSize")+ "]");
-                // return JSON.serialize(newUser);
-                Document userInfo = new Document();
-                userInfo.append("_id", matchingUsers.first().get("_id"));
-                userInfo.append("FirstName", matchingUsers.first().get("FirstName"));
-                userInfo.append("LastName", matchingUsers.first().get("LastName"));
-                userInfo.append("tShirtSize", matchingUsers.first().get("tShirtSize"));
-                userInfo.append("role", matchingUsers.first().get("role"));
+                ObjectId id = newUser.getObjectId("_id");
+                System.err.println("Successfully added new user [_id= " + id + ", SubjectID= " + subjectID + ", FirstName= " + firstName + ", LastName= " + lastName + "]");
 
-                return JSON.serialize(userInfo);
+                return JSON.serialize(id);
             } catch(MongoException me) {
                 me.printStackTrace();
                 return null;
             }
-        } else {
-            //assumes there will only be 1 user returned
-            Document userInfo = new Document();
-            userInfo.append("_id", matchingUsers.first().get("_id"));
-            userInfo.append("FirstName", matchingUsers.first().get("FirstName"));
-            userInfo.append("LastName", matchingUsers.first().get("LastName"));
-            userInfo.append("tShirtSize", matchingUsers.first().get("tShirtSize"));
-            userInfo.append("role", matchingUsers.first().get("role"));
-
-            return JSON.serialize(userInfo);
         }
-
-        //----------------------------
-
-
-    }
 
     //edits user t-shirt size settings
     public String editUsertShirtSize(String userID, String size) {

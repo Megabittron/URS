@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Observable } from "rxjs/Observable";
+import {AuthenticationService} from "../authentication.service";
+import {User} from "../user";
 
 declare const gapi: any;
 @Component({
@@ -9,58 +11,47 @@ declare const gapi: any;
 })
 
 export class LoginComponent implements OnInit {
-    simpleObservable = new Observable((observer) => {
-        this.checkGapi();
-    });
 
-    constructor() {
-    }
+    public authIsLoaded: boolean = false;
+    public isLoggedIn: boolean = false;
+    public user: User;
+
+    constructor(private authenticationService: AuthenticationService) { }
 
     checkUserDetails() {
-        if (gapi.auth2) {
-            var googleAuth = gapi.auth2.getAuthInstance();
-            var googleUser = googleAuth.currentUser.get();
-            var profile = googleUser.getBasicProfile();
+        console.log('User: ' + this.user.FirstName);
+        console.log('Authloaded: ' + this.authIsLoaded);
+        console.log('IsLoggedIn: ' + this.isLoggedIn);
+        console.log(gapi.auth2.getAuthInstance().currentUser.get().isSignedIn());
+        console.log(this.authenticationService.isLoggedIn$.getValue());
 
-            console.log('Auth is signed in: ' + googleAuth.isSignedIn.get());
-            console.log('User is signed in: ' + googleUser.isSignedIn());
-            console.log('Hosted Domain: ' + googleUser.getHostedDomain());
-            console.log('User has granted: ' + googleUser.getGrantedScopes());
-            console.log('User name: ' + profile.getName());
-            console.log('User email: ' + profile.getEmail());
-            console.log('User image: ' + profile.getImageUrl());
-
-        } else {
-            console.log('gapi.auth2 is undefined');
-        }
     }
 
-    signOut() {
-        if (gapi.auth2) {
-            gapi.auth2.getAuthInstance().signOut();
-        } else {
-            console.log('cant sign out, no gapi');
-        }
-    }
+    signIn(): void {
+        this.authenticationService.signIn();
+    };
 
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    async checkGapi() {
-        await this.sleep(100);
-
-        if (gapi.auth2 != undefined) {
-            console.log('gapi.auth2 is initialized');
-            return true;
-        } else {
-            console.log('gapi.auth2 is undefined');
-            this.checkGapi();
-        }
+    signOut(): void {
+        this.authenticationService.signOut();
     }
 
     ngOnInit() {
-        this.simpleObservable.subscribe();
-    }
+        this.authenticationService.loadAuth2();
+        this.authenticationService.isLoaded$.subscribe( value => {
+            console.log(value);
+            this.authIsLoaded = value;
+        });
 
+        this.authenticationService.isLoggedIn$.subscribe( value => {
+            console.log(value);
+            this.isLoggedIn = value;
+        });
+
+        this.authenticationService.user$.subscribe( value => {
+            this.user = value;
+            console.log(value);
+        });
+
+
+    }
 }

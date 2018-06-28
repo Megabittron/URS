@@ -7,14 +7,17 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.mongodb.client.MongoDatabase;
+import server.database.users.UserController;
+
 import java.io.FileReader;
 import java.util.Collections;
 
 public class LoginController {
 
     // Construct controller for login.
-    public LoginController() {
-
+    private final UserController userController;
+    public LoginController(UserController userController){
+        this.userController = userController;
     }
 
 
@@ -23,7 +26,6 @@ public class LoginController {
 
         NetHttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = new JacksonFactory();
-        String toReturn = "Failed to verify idToken";
 
         try {
             GoogleClientSecrets clientSecrets =
@@ -40,18 +42,26 @@ public class LoginController {
                 GoogleIdToken.Payload payload = idToken.getPayload();
 
                 if (payload.getHostedDomain().equals("morris.umn.edu")) {
-                    toReturn = "Verified idToken";
+                    String user = userController.getUserBySub(payload.getSubject());
+                    String subjectID = payload.getSubject();
+                    String firstName = (String) payload.get("given_name");
+                    String lastName = (String) payload.get("family_name");
+
+                    if (user.equals("[ ]")) {
+                        userController.addNewUser(subjectID, firstName, lastName);
+                        user = userController.getUserBySub(payload.getSubject());
+                    }
+
+                    return user;
                 }
             } else {
                 System.out.println("Invalid ID token.");
             }
         } catch (Exception e) {
             System.out.println(e);
-
-            toReturn = "null";
         }
 
 
-        return toReturn;
+        return null;
     }
 }

@@ -32,7 +32,7 @@ public class Server {
         AbstractController abstractController = new AbstractController(database);
         AbstractRequestHandler abstractRequestHandler = new AbstractRequestHandler(abstractController);
 
-        LoginController loginController = new LoginController();
+        LoginController loginController = new LoginController(userController);
         LoginRequestHandler loginRequestHandler = new LoginRequestHandler(loginController);
 
         //Configure Spark
@@ -83,6 +83,7 @@ public class Server {
 
         get("api/users", userRequestHandler::getUsers);
         get("api/user/:_id", userRequestHandler::getUserJSON);
+        get("api/userr/:subjectID", userRequestHandler::getUserBySubjectID);
 
         // Abstracts Endpoints
 
