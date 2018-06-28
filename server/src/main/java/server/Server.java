@@ -2,12 +2,14 @@ package server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import spark.Request;
+import spark.Response;
+
 import server.database.users.UserRequestHandler;
 import server.database.users.UserController;
 import server.database.abstracts.AbstractController;
 import server.database.abstracts.AbstractRequestHandler;
-import spark.Request;
-import spark.Response;
+
 
 import java.io.IOException;
 
@@ -60,6 +62,7 @@ public class Server {
 
         // Redirects for the "home" page
         redirect.get("", "/");
+        redirect.get("/", "http://localhost:9000");
 
         /// User Endpoints ///////////////////////////
 
