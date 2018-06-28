@@ -2,20 +2,36 @@ package server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import server.database.users.UserRequestHandler;
+import server.database.users.UserController;
+import server.database.abstracts.AbstractController;
+import server.database.abstracts.AbstractRequestHandler;
 import spark.Request;
 import spark.Response;
+import spark.Route;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.io.IOException;
+
+import com.google.api.client.googleapis.auth.oauth2.*;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
+
+import org.json.*;
 
 import server.database.users.UserRequestHandler;
 import server.database.users.UserController;
 import server.database.abstracts.AbstractController;
 import server.database.abstracts.AbstractRequestHandler;
 
-
-import java.io.IOException;
-
-
-import static spark.Spark.*;
-import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Server {
     private static final String databaseName = "dev";
@@ -25,7 +41,6 @@ public class Server {
 
         MongoClient mongoClient = new MongoClient();
         MongoDatabase database = mongoClient.getDatabase(databaseName);
-
 
         UserController userController = new UserController(database);
         UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
@@ -57,12 +72,21 @@ public class Server {
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
-
-
-
         // Redirects for the "home" page
         redirect.get("", "/");
-        redirect.get("/", "http://localhost:9000");
+
+        Route clientRoute = (req, res) -> {
+            InputStream stream = userController.getClass().getResourceAsStream("/public/index.html");
+            return stream != null ? IOUtils.toString(stream) : "Sorry, we couldn't find that!";
+        };
+
+        Route notFoundRoute = (req, res) -> {
+            res.type("text");
+            res.status(404);
+            return "Sorry, we couldn't find that!";
+        };
+
+        get("/", clientRoute);
 
         /// User Endpoints ///////////////////////////
 
@@ -78,9 +102,57 @@ public class Server {
         get("api/abstracts", abstractRequestHandler::getAbstracts);
         get("api/abstracts/:id", abstractRequestHandler::getAbstractJSON);
 
+        post("api/login", (req, res) -> {
 
-        // An example of throwing an unhandled exception so you can see how the
-        // Java Spark debugger displays errors like this.
+            JSONObject obj = new JSONObject(req.body());
+            String authCode = obj.getString("code");
+
+            try {
+                // This is where we import the Client Secret File
+
+                String CLIENT_SECRET_FILE = "./src/main/java/server/database/server_files/client_secret.json";
+
+                GoogleClientSecrets clientSecrets =
+                        GoogleClientSecrets.load(
+                                JacksonFactory.getDefaultInstance(), new FileReader(CLIENT_SECRET_FILE));
+
+                GoogleTokenResponse tokenResponse =
+                        new GoogleAuthorizationCodeTokenRequest(
+                                new NetHttpTransport(),
+                                JacksonFactory.getDefaultInstance(),
+                                "https://www.googleapis.com/oauth2/v4/token",
+                                clientSecrets.getDetails().getClientId(),
+
+                                // Replace clientSecret with the localhost one if testing
+                                clientSecrets.getDetails().getClientSecret(),
+                                authCode,
+                                "http://localhost:9000")
+
+                                // Specify the same redirect URI that you use with your web
+                                // app. If you don't have a web version of your app, you can
+                                // specify an empty string.
+                                .execute();
+
+                GoogleIdToken idToken = tokenResponse.parseIdToken();
+                GoogleIdToken.Payload payload = idToken.getPayload();
+                String subjectId = payload.getSubject();  // Use this value as a key to identify a user.
+                String email = payload.getEmail();
+                boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+                String name = (String) payload.get("name");
+                String pictureUrl = (String) payload.get("picture");
+                String locale = (String) payload.get("locale");
+                String familyName = (String) payload.get("family_name");
+                String givenName = (String) payload.get("given_name");
+
+                return userController.addNewUser(subjectId, givenName, familyName);
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            return "";
+        });
+
         get("api/error", (req, res) -> {
             throw new RuntimeException("A demonstration error");
         });
@@ -92,12 +164,13 @@ public class Server {
         // before they they're processed by things like `get`.
         after("*", Server::addGzipHeader);
 
+        get("api/*", notFoundRoute);
+
+        get("/*", clientRoute);
+
         // Handle "404" file not found requests:
-        notFound((req, res) -> {
-            res.type("text");
-            res.status(404);
-            return "Sorry, we couldn't find that!";
-        });
+        notFound(notFoundRoute);
+
     }
 
     // Enable GZIP for all responses
