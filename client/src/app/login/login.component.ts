@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authenticationService.loadAuth2();
         this.authenticationService.isLoaded$.subscribe( value => {
             console.log(value);
             this.authIsLoaded = value;
@@ -52,6 +51,6 @@ export class LoginComponent implements OnInit {
             console.log(value);
         });
 
-
+        this.authenticationService.loadAuth2();
     }
 }
