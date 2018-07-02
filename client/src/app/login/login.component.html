@@ -1,5 +1,5 @@
 <button *ngIf="isLoggedIn" (click)="signOut()">Sign Out</button>
-<h2> Signed in as {{user.FirstName}} {{user.LastName}} </h2>
+<h2 *ngIf="isLoggedIn"> Signed in as {{user.FirstName}} {{user.LastName}} </h2>
 
 <button id="inv" (click)="checkUserDetails()">check stats</button>
 <div id="my-signin2"></div>

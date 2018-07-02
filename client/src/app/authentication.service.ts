@@ -10,14 +10,7 @@ declare const gapi: any;
 export class AuthenticationService {
 
     public auth2: any;
-    public user$: BehaviorSubject<User> = new BehaviorSubject<User>({
-        _id: '',
-        SubjectID: '',
-        FirstName: '',
-        LastName: '',
-        ShirtSize: '',
-        Role: ''
-    });
+    public user$: BehaviorSubject<User> = new BehaviorSubject<User>(null);
     public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public isLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -74,21 +67,23 @@ export class AuthenticationService {
             'height': 50,
             'longtitle': true,
             'theme': 'light',
-            'onsuccess': param => {
-                this.getUser(param.getBasicProfile().getId()).subscribe(user => {
-                    this.user$ = user[0];
-                    this.isLoggedIn$.next(true);
-                })
+            'onsuccess': user => {
+                this.validateToken(user.getAuthResponse().id_token).subscribe(user => {
+                        this.zone.run(() => {
+                            this.user$.next(user[0]);
+                            this.isLoggedIn$.next(true);
+                        });
+                    },
+                    (err) => {
+                        console.log(err);
+                    });
             },
             'onfailure': param => {
-                console.log('fail');
+                console.log('FAILED TO SIGN IN!!!');
+                console.log(param);
             }
         });
 
-    }
-
-    getUser(subjectID: string): Observable<User> {
-        return this.http.get<User>(environment.API_URL + 'userr/' + subjectID);
     }
 
 }

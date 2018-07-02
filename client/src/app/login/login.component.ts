@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { Observable } from "rxjs/Observable";
 import {AuthenticationService} from "../authentication.service";
 import {User} from "../user";
 
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
         console.log('Authloaded: ' + this.authIsLoaded);
         console.log('IsLoggedIn: ' + this.isLoggedIn);
         console.log(gapi.auth2.getAuthInstance().currentUser.get().isSignedIn());
-        console.log(this.authenticationService.isLoggedIn$.getValue());
+        console.log(gapi.auth2.getAuthInstance().currentUser.get());
 
     }
 
@@ -37,18 +36,18 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.authenticationService.isLoaded$.subscribe( value => {
-            console.log(value);
+            console.log('Auth is loaded: ' + value);
             this.authIsLoaded = value;
         });
 
         this.authenticationService.isLoggedIn$.subscribe( value => {
-            console.log(value);
+            console.log('User is logged in: ' + value);
             this.isLoggedIn = value;
         });
 
         this.authenticationService.user$.subscribe( value => {
             this.user = value;
-            console.log(value);
+            console.log('User is: ' + value);
         });
 
         this.authenticationService.loadAuth2();
