@@ -83,7 +83,6 @@ public class Server {
 
         get("api/users", userRequestHandler::getUsers);
         get("api/user/:_id", userRequestHandler::getUserJSON);
-        get("api/userr/:subjectID", userRequestHandler::getUserBySubjectID);
 
         // Abstracts Endpoints
 
