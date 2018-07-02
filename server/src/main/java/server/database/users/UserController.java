@@ -38,10 +38,9 @@ public class UserController {
      //     * and `null` if no user with that ID is found
      //     */
     public String getUser(String id) {
-        Document filterDoc = new Document();
-        filterDoc.append("_id", id);
+        ObjectId idToFind = new ObjectId(id);
 
-        FindIterable<Document> user = userCollection.find(filterDoc);
+        FindIterable<Document> user = userCollection.find(eq("_id", idToFind));
 
         return JSON.serialize(user);
     }
