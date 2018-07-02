@@ -1,3 +1,8 @@
-<app-nav></app-nav>
-<router-outlet></router-outlet>
-<app-login></app-login>
+<app-nav *ngIf="isLoggedIn"></app-nav>
+<router-outlet *ngIf="isLoggedIn"></router-outlet>
+<button *ngIf="isLoggedIn" (click)="signOut()">Sign Out</button>
+<app-login *ngIf="!isLoggedIn"></app-login>
+
+
+
+

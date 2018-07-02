@@ -35,21 +35,22 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.authenticationService.loadAuth2();
+
+        this.authenticationService.renderSignIn();
+
         this.authenticationService.isLoaded$.subscribe( value => {
-            console.log('Auth is loaded: ' + value);
             this.authIsLoaded = value;
         });
 
         this.authenticationService.isLoggedIn$.subscribe( value => {
-            console.log('User is logged in: ' + value);
             this.isLoggedIn = value;
         });
 
         this.authenticationService.user$.subscribe( value => {
             this.user = value;
-            console.log('User is: ' + value);
         });
 
-        this.authenticationService.loadAuth2();
+
     }
 }

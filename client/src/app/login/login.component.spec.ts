@@ -14,6 +14,7 @@ describe('LoginComponent', () => {
       isLoaded$: BehaviorSubject<boolean>;
       user$: BehaviorSubject<User>;
       loadAuth2: () => void;
+      renderSignIn: () => void;
   };
 
   beforeEach(async(() => {
@@ -28,7 +29,8 @@ describe('LoginComponent', () => {
               ShirtSize: '',
               Role: ''
           }),
-          loadAuth2: () => {}
+          loadAuth2: () => {},
+          renderSignIn: () => {}
       };
 
     TestBed.configureTestingModule({
