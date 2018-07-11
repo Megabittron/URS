@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/Megabittron/URS.svg?branch=master)](https://travis-ci.org/Megabittron/URS)
+[![Build Status](https://travis-ci.org/Megabittron/URS.svg?branch=google-oauth)](https://travis-ci.org/Megabittron/URS)
 
 
 <!-- TOC depthFrom:1 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
