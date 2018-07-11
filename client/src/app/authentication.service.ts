@@ -14,25 +14,10 @@ export class AuthenticationService {
     public isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public isLoaded$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-
     constructor(private zone: NgZone, private http: HttpClient) { }
 
     validateToken(token: String): Observable<User> {
         return this.http.get<User>(environment.API_URL + 'login/' + token);
-    }
-
-    signIn(): void {
-        this.auth2.signIn().then(user => {
-            this.validateToken(user.getAuthResponse().id_token).subscribe(user => {
-                this.zone.run(() => {
-                    this.user$.next(user[0]);
-                    this.isLoggedIn$.next(true);
-                });
-            },
-                (err) => {
-                    console.log(err);
-                });
-        });
     }
 
     signOut(): void {
@@ -51,7 +36,8 @@ export class AuthenticationService {
         gapi.load('auth2', () => {
             gapi.auth2.init({
                 client_id: '450453277496-7vivahunsdfj4rvqv4q1pb6e6bqlk4v3.apps.googleusercontent.com',
-                fetch_basic_profile: true
+                fetch_basic_profile: true,
+                hosted_domain: 'morris.umn.edu'
             }).then((auth) => {
                     this.zone.run(() => {
                         this.auth2 = auth;
@@ -86,5 +72,4 @@ export class AuthenticationService {
             }
         });
     }
-
 }
