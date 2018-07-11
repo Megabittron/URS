@@ -17,10 +17,6 @@ export class LoginComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService) { }
 
-    signIn(): void {
-        this.authenticationService.signIn();
-    };
-
     signOut(): void {
         this.authenticationService.signOut();
     }
