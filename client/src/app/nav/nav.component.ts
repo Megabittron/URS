@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
 import {User} from "../user";
+import {MatDialog, MatDialogConfig} from "@angular/material";
+import {AccountDialogComponent} from "../account-dialog/account-dialog.component";
 
 @Component({
     selector: 'app-nav',
@@ -16,11 +18,21 @@ export class NavComponent implements OnInit{
     public profilePic: string = null;
     public infoState: string = 'inactive';
 
-    constructor(private authenticationService: AuthenticationService) {
+    constructor(private authenticationService: AuthenticationService,
+                private dialog: MatDialog) {
         this.text = 'Nav';
     }
-    toggleInfoState() {
-        this.infoState = this.infoState === 'active' ? 'inactive' : 'active';
+
+    openDialog() {
+
+        const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.position = {
+            'top': '0',
+            'right': '50'
+        };
+
+        this.dialog.open(AccountDialogComponent, dialogConfig);
     }
 
     signOut(): void {
