@@ -16,21 +16,19 @@ export class NavComponent implements OnInit{
     public isLoggedIn: boolean = false;
     public user: User;
     public profilePic: string = null;
-    public infoState: string = 'inactive';
 
     constructor(private authenticationService: AuthenticationService,
                 private dialog: MatDialog) {
         this.text = 'Nav';
     }
 
-    openDialog() {
-
+    openDialog(event) {
+        console.log(event);
         const dialogConfig = new MatDialogConfig();
 
-        dialogConfig.position = {
-            'top': '0',
-            'right': '50'
-        };
+        dialogConfig.position = {top: '64px', right: '30px'};
+        dialogConfig.width = '30%';
+        dialogConfig.height = '233px';
 
         this.dialog.open(AccountDialogComponent, dialogConfig);
     }
